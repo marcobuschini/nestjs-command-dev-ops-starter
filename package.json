@@ -1,0 +1,136 @@
+{
+  "name": "nestjs-command-dev-ops-starter",
+  "version": "0.0.1",
+  "description": "An example NestJS command line starter in TypeScript",
+  "bin": {
+    "nestjs-command-dev-ops-starter": "dist/cli.js"
+  },
+  "scripts": {
+    "run": "node dist/cli",
+    "test": "jest --detectOpenHandles",
+    "test:coverage": "jest --coverage --runInBand --silent --detectOpenHandles",
+    "build": "nest build"
+  },
+  "dependencies": {
+    "@nestjs/common": "^8.4.7",
+    "@nestjs/core": "^8.4.7",
+    "@nestjs/typeorm": "^8.1.4",
+    "nestjs-command": "^3.1.1",
+    "typeorm": "^0.3.6",
+    "yargs": "^17.5.1"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^8.2.8",
+    "@nestjs/platform-express": "^8.4.7",
+    "@nestjs/schematics": "^8.0.11",
+    "@nestjs/testing": "^8.4.7",
+    "@types/jest": "^28.1.3",
+    "@types/yargs": "^17.0.10",
+    "commitizen": "^4.2.4",
+    "eslint": "^8.18.0",
+    "husky": "^4.2.5",
+    "jest": "^28.1.2",
+    "jest-html-reporters": "^3.0.9",
+    "jest-junit": "^14.0.0",
+    "prettier": "^2.7.1",
+    "pretty-quick": "^3.1.3",
+    "reflect-metadata": "^0.1.13",
+    "ts-jest": "^28.0.5",
+    "ts-node": "^10.8.1",
+    "typescript": "^4.7.4"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "project": "tsconfig.json",
+      "sourceType": "module"
+    },
+    "plugins": [
+      "@typescript-eslint/eslint-plugin"
+    ],
+    "extends": [
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:@typescript-eslint/recommended",
+      "prettier"
+    ],
+    "root": true,
+    "env": {
+      "node": true,
+      "jest": true
+    },
+    "overrides": [
+      {
+        "files": [
+          "src/**/*.ts"
+        ],
+        "excludedFiles": "*.js"
+      }
+    ],
+    "rules": {
+      "@typescript-eslint/interface-name-prefix": "off",
+      "@typescript-eslint/explicit-function-return-type": "error",
+      "@typescript-eslint/no-explicit-any": "error",
+      "@typescript-eslint/no-floating-promises": "error"
+    }
+  },
+  "prettier": {
+    "singleQuote": true,
+    "semi": false
+  },
+  "jest": {
+    "collectCoverage": true,
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/test/assets/"
+    ],
+    "reporters": [
+      "default",
+      [
+        "jest-junit",
+        {
+          "outputDirectory": "tests/results",
+          "outputName": "report.xml"
+        }
+      ],
+      [
+        "jest-html-reporters",
+        {
+          "pageTitle": "Test Report",
+          "publicPath": "tests/results/report.html"
+        }
+      ]
+    ],
+    "coverageReporters": [
+      "lcovonly",
+      "html",
+      "text"
+    ],
+    "coverageDirectory": "tests/coverage",
+    "roots": [
+      "<rootDir>/src"
+    ],
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true",
+      "pre-commit": "npx pretty-quick --staged && npx jest --passWithNoTests",
+      "pre-push": "npm run build"
+    }
+  }
+}
